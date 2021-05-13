@@ -1,11 +1,60 @@
--- design the tables to hold data in the CSVs
---create table schemas for each of 6 csv files 
-	-- specify datatypes 
-	-- specify primary keys 
-	-- specify foreign keys 
-	-- specify other constraints
--- import the CSVs into a SQL database 
--- : 
+-- Create table schemas
+-- Departments Table
+CREATE TABLE departments(
+	dept_no VARCHAR(30) NOT NULL, 
+	dept_name VARCHAR(30) NOT NULL,
+	PRIMARY KEY (dept_no)
+)
+-- Employees Table
+CREATE TABLE employees (
+	emp_no INT,
+	birth_date DATE NOT NULL, 
+	first_name VARCHAR(30) NOT NULL, 
+	last_name VARCHAR(30) NOT NULL,
+	sex VARCHAR(30) NOT NULL,
+	hire_date DATE NOT NULL,
+	PRIMARY KEY (emp_no)
+)
+
+-- Department Employee Table 
+CREATE TABLE dept_emp (
+	emp_no INT, 
+	dept_no VARCHAR(30) NOT NULL, 
+	from_date DATE NOT NULL, 
+	to_date DATE NOT NULL,
+	FOREIGN KEY (emp_no) REFERENCES employees(emp_no),
+	FOREIGN KEY (dept_no) REFERENCES departments(dept_no)
+)
+-- Department Manager Table 
+CREATE TABLE dept_managers(
+	emp_no INT,
+	dept_no VARCHAR(30) NOT NULL, 
+	from_date DATE NOT NULL, 
+	to_date DATE NOT NULL,
+	FOREIGN KEY (emp_no) REFERENCES employees(emp_no),
+	FOREIGN KEY (dept_no) REFERENCES departments(dept_no)
+)
+-- Salaries Table
+CREATE TABLE salaries(
+	emp_no INT, 
+	dept_no VARCHAR(30) NOT NULL,
+	salary INT,
+	from_date DATE NOT NULL, 
+	to_date DATE NOT NULL,
+	FOREIGN KEY (emp_no) REFERENCES employees(emp_no),
+	FOREIGN KEY (dept_no) REFERENCES departments(dept_no)
+)
+
+-- Employee Title Table
+CREATE TABLE titles(
+	emp_no INT, 
+	title VARCHAR(30) NOT NULL,
+	from_date DATE NOT NULL, 
+	to_date DATE NOT NULL,
+	FOREIGN KEY (emp_no) REFERENCES employees(emp_no)
+)
+	
+-------QUERIES-------
 /*
 List the following details of each employee
 	employee number
@@ -13,6 +62,7 @@ List the following details of each employee
 	first name 
 	sex
 	salary
+
 
 List first name, last name, and hire date for employees who were hired in 1986
 
