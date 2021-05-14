@@ -19,7 +19,8 @@ FROM employees
 WHERE hire_date >= '19860101' AND hire_date <= '19861231';
 		
 
---List the manager of each department with the following information: 
+--List the manager of each department with the following information: department number, department name, employee number
+-- last name, and first name
 SELECT  ma.dept_no,
 		d.dept_name,
 		e.emp_no,
@@ -32,7 +33,7 @@ INNER JOIN employees as e
 	ON e.emp_no = ma.emp_no;
 
 
--- List the department of each employee with the following information: employee number, last name, first name, department name
+-- List the department of each employee with the following information: employee number, last name, first name, and department name
 SELECT  de.emp_no,
 		e.last_name,
 		e.first_name,
@@ -51,7 +52,7 @@ FROM employees
 WHERE first_name = 'Hercules' AND last_name LIKE 'B%';
 
 
--- List all employees in the Sales department, including their employee number, last name, first name, and department name.
+-- List all employees in the Sales department, including their employee number, last name, first name, and department name
 SELECT  de.emp_no,
 		e.last_name, 
 		e.first_name,
@@ -64,7 +65,7 @@ INNER JOIN departments as d
 WHERE dept_name = 'Sales';
 
 
---List all employees in the Sales and Development departments, including their employee number, last name, first name, and department name.
+--List all employees in the Sales and Development departments, including their employee number, last name, first name, and department name
 SELECT  de.emp_no,
 		e.last_name, 
 		e.first_name,
@@ -82,3 +83,16 @@ SELECT last_name,
 FROM employees
 GROUP BY last_name
 ORDER BY COUNT(last_name) DESC;
+
+-- Epilogue 
+SELECT  de.emp_no,
+		e.last_name, 
+		e.first_name,
+		d.dept_name
+FROM dept_emp as de
+INNER JOIN employees as e
+	ON de.emp_no = e.emp_no
+INNER JOIN departments as d
+	ON de.dept_no = d.dept_no
+WHERE de.emp_no = 499942;
+
